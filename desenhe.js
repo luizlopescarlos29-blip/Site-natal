@@ -76,3 +76,77 @@ canvas.addEventListener('mouseout', stopDrawing);
 colorPicker.addEventListener('change', changeColor);
 lineWidthRange.addEventListener('input', changeLineWidth);
 clearButton.addEventListener('click', clearCanvas);
+
+
+
+/*aqui fica as luzes de nata*/
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('lights-container');
+    const numberOfLights = 100; // Mais luzes para preencher melhor
+    const colors = ['#FF4500', '#32CD32', '#1E90FF', '#FFD700', '#FF1493', '#8A2BE2']; 
+    
+    // Captura as dimensões da viewport
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    
+    // Calcula o perímetro para distribuição uniforme
+    const perimeter = (2 * viewportWidth) + (2 * viewportHeight);
+    const spacing = perimeter / numberOfLights;
+    
+    let currentDistance = 0;
+    const allLights = [];
+
+    function createLight(distance) {
+        const light = document.createElement('div');
+        light.classList.add('light-bulb');
+        
+        // Define uma cor aleatória
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        light.style.color = randomColor;
+
+        // Lógica de Posicionamento ao longo do perímetro (Topo, Direita, Baixo, Esquerda)
+        if (distance < viewportWidth) {
+            // BORDA SUPERIOR
+            light.style.top = '0px';
+            light.style.left = `${distance}px`;
+        } else if (distance < (viewportWidth + viewportHeight)) {
+            // BORDA DIREITA
+            const sideDistance = distance - viewportWidth;
+            light.style.top = `${sideDistance}px`;
+            light.style.right = '0px';
+        } else if (distance < (2 * viewportWidth + viewportHeight)) {
+            // BORDA INFERIOR
+            const bottomDistance = distance - (viewportWidth + viewportHeight);
+            light.style.bottom = '0px';
+            light.style.right = `${bottomDistance}px`; 
+        } else {
+            // BORDA ESQUERDA
+            const leftDistance = distance - (2 * viewportWidth + viewportHeight);
+            light.style.bottom = `${leftDistance}px`; 
+            light.style.left = '0px';
+        }
+
+        container.appendChild(light);
+        return light;
+    }
+
+    // Loop para criar as lâmpadas e distribuí-las
+    for (let i = 0; i < numberOfLights; i++) {
+        const lightElement = createLight(currentDistance);
+        allLights.push(lightElement);
+        currentDistance += spacing; 
+    }
+    
+    // Função de Animação (Piscar Irregular)
+    function twinkleLights() {
+        allLights.forEach(light => {
+            // Chance de 35% de a lâmpada mudar de estado a cada ciclo
+            if (Math.random() < 0.35) {
+                light.classList.toggle('on'); 
+            }
+        });
+    }
+
+    // Faz a animação parecer mais suave e rápida
+    setInterval(twinkleLights, 150); 
+});

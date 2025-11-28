@@ -1,49 +1,88 @@
 body {
+    /* Define o body como um container flexível */
     display: flex;
+    /* Alinha os filhos (div#controls e canvas) verticalmente */
     flex-direction: column;
-    align-items: center;
+    /* Centraliza os filhos horizontalmente */
+    align-items: center; 
+    /* Garante que o body ocupe a altura total da viewport (para centralização vertical) */
     min-height: 100vh;
-    margin: 20px;
-    background:linear-gradient( #bc2bf5 ,#28ddf9) ;
-    font-family: Arial, sans-serif;
+    /* Remove as margens padrão do body */
+    margin: 0; 
+    /* Centraliza o conteúdo verticalmente (Opção 1) */
+    justify-content: center; 
+    /* Adiciona um espaço de 20px entre o div#controls e o canvas */
+    gap: 20px;
 }
 
+
 #controls {
-    margin-bottom: 20px;
-    padding: 15px;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    /* Define o container de controles como flexível */
+    display: flex;
+    /* Alinha os itens na linha verticalmente ao centro (essencial para alinhar o slider) */
+    align-items: center; 
+    /* Adiciona um espaço de 15px entre cada item (rótulo, input, botão) */
+    gap: 15px; 
+    /* Estilo visual opcional para a caixa de controles */
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #controls h3 {
-    margin-top: 0;
+    /* Remove a margem padrão do título (H3) para alinhamento perfeito */
+    margin: 0;
+    /* Adiciona um espaço após o título para separá-lo dos controles */
+    margin-right: 10px; 
 }
 
-#controls label, #controls input, #controls button {
-    margin-right: 15px;
-    font-size: 16px;
-}
-
-#clearButton {
-    padding: 8px 15px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 3px;
-}
-
-/* Estilo do Quadro de Desenho */
 #drawingCanvas {
-    border: 2px solid #000;
-    background-color: #fff; /* Fundo branco para desenhar */
-    cursor: crosshair; /* Muda o cursor para indicar desenho */
+    /* Estilo opcional para o canvas (para que ele seja visível) */
+    border: 2px solid #333;
+    background-color: white;
+    /* Garante que ele também esteja centralizado (já garantido pelo body align-items: center) */
 }
 
 
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    min-height: 100vh;
+    margin: 0; 
+    justify-content: center; 
+    gap: 20px;
+}
 
+#controls {
+    display: flex;
+    align-items: center; 
+    gap: 15px; 
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#controls h3 {
+    margin: 0;
+    margin-right: 10px; 
+    font-size: 1.2em;
+}
+
+#drawingCanvas {
+    border: 2px solid #333;
+    background-color: white;
+}
+
+/* Garante que o slider não fique muito grande */
+#lineWidth {
+    width: 150px;
+}
+
+
+/*aqui botoes coloridos cabecalho*//*////////////////////////////////*/
 /*botoes aqui*//*////////////////////////////*/
 html,
 body {
@@ -110,7 +149,6 @@ body {
     left: 0;
     top: 0;
     border-radius: 10px;
-    
 }
 
 @keyframes glowing {
@@ -120,11 +158,84 @@ body {
 }
 .natalina{
   display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 70px;
-padding: 1%;
+
+}
+
+/*cor do fundo site*//*//////////////////////////////*/
+body{
+    background:linear-gradient( #bc2bf5 ,#28ddf9) ;
 }
 
 
-/*//////////////////////////////////////////////*/
+
+/*aqui mexe na class:container*/
+.arvores{
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow:hidden ;
+}
+
+.arvores::before{
+  content: '';
+  position:absolute ;
+  bottom: 0;
+  background: url(tree.png);
+  width: 100%;
+  height: 200px;
+}
+
+/*luzes piscando arvore de natal//////////////////////////////*/
+
+
+body {
+    /* Fundo escuro para realçar o brilho das luzes */
+    background-color: #0c0c1c; 
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #140f0f;
+    /* Garante que o body ocupe a tela toda */
+    min-height: 100vh;
+    /* Esconde qualquer barra de rolagem que as luzes possam gerar */
+    overflow: hidden; 
+}
+
+#content {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+/* Container que cobre a área de visualização inteira (Viewport) */
+#lights-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; /* 100% da Largura da Viewport */
+    height: 100vh; /* 100% da Altura da Viewport */
+    pointer-events: none; /* Permite clicar no conteúdo por trás das luzes */
+    z-index: 9999; /* Garante que as luzes fiquem por cima de tudo */
+}
+
+/* Estilo da Lâmpada Individual */
+.light-bulb {
+    position: absolute; 
+    width: 16px; 
+    height: 16px;
+    border-radius: 50%;
+    /* Estado inicial 'desligado' */
+    background-color: rgba(51, 51, 51, 0.5); 
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.2); 
+    transition: box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+/* Classe de luz acesa - Efeito de BRILHO INTENSO */
+.light-bulb.on {
+    background-color: currentColor; 
+    /* Múltiplas sombras para um efeito de néon/brilho realista */
+    box-shadow: 
+        0 0 10px currentColor, 
+        0 0 30px currentColor, 
+        0 0 60px currentColor;
+}
